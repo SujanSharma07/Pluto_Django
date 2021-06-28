@@ -5,10 +5,13 @@ from django.shortcuts import render
 def home(request):
     try:
         data = request.GET
-        email = data['email']
-        password = data['pass']
-        print(f'Email {email} and password {password}')
-
+        maths = int(data['maths'])
+        social = int(data['social'])
+        total = maths + social
+        percentage = total/2
+        context = {'t': total, 'per': percentage,
+                   'marks': [("Maths", 34), ("Social", 78), ("Science", 34)]}
+        return render(request, 'output.html', context)
     except:
         pass
 
@@ -16,11 +19,8 @@ def home(request):
 
 
 def about(request):
-    data = request.GET
-    email = data['email']
-    password = data['pass']
-    print(f'Email {email} and password {password} i am in about')
-    return HttpResponse('Welcome to About Page ')
+    print("about is called")
+    return render(request, 'home.html')
 
 
 def contact(request):
