@@ -1,7 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Person
+from .forms import PersonForm
+from pathlib import Path
+from django.contrib import messages
+import os
 # Create your views here.
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'static/heart.pickle')
 
 
 def home(request, status):
@@ -25,17 +32,45 @@ def person_filter(request):
             persons = Person.objects.all()
 
     except:
+        data = "All"
         persons = Person.objects.all()
 
-    context = {'persons': persons}
+    context = {'persons': persons, 'filter': data}
     return render(request, 'persons.html', context)
 
 
 def create_person(request):
+    form = PersonForm()
+    if request.method == 'POST':
+        form = PersonForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Object Saved Successfully")
+            form = PersonForm()
+        else:
+            messages.error(request, "Please Provide valid data")
 
-    return render(request, 'create.html')
+    #context = {'form': form, 'messages': messages}
+    return render(request, 'create.html', locals())
 
 
+# def create_person(request):
+#     if request.method == 'POST':
+#         if Person.objects.filter(email=request.POST['email']).count():
+#             print("You can not create account with this email")
+#         else:
+#             Person.objects.create(year=request.POST['year'],
+#                                   first_name=request.POST['first_name'],
+#                                   last_name=request.POST['last_name'],
+#                                   age=request.POST['age'],
+#                                   email=request.POST['email'],
+#                                   desc=request.POST['desc'],
+#                                   salary=request.POST['salary'],
+#                                   )
+#             print('Object Created Successfully')
+#     else:
+#         print('GET REQUEST render page only')
+#     return render(request, 'create.html')
 """ 
 Person.objects.create(year="Junior",
                       first_name='rohit',

@@ -15,6 +15,10 @@ GENDERS = [('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')]
 class Person(models.Model):
     year = models.CharField(choices=YEAR_IN_SCHOOL_CHOICES,
                             max_length=150, default='Graduate')
+
+    documents = models.FileField(upload_to='documents/', default='default.jpg')
+    photo = models.ImageField(upload_to='photo/', null=True, blank=True)
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     age = models.IntegerField(default=18)
