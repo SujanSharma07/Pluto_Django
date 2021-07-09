@@ -5,62 +5,42 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-replace-svg="nest"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Person</title>
 
     <style>
-        form {
-            padding: 10px;
-            margin: 10px;
-            border: 1px solid black;
-            background-color: bisque;
-            left: 45%;
-            width: 50%;
+        .container {
+            background-color: lightgrey;
+            width: 70%;
+            margin: 1rem;
+            padding: 1rem;
+            position: absolute;
+            left: 18%;
         }
     </style>
 </head>
 
 <body>
     <center class='text-success'>
-        <h1> Create Persons</h1>
+        <h1> {{person.first_name}}
+            {{person.last_name}}
+        </h1>
     </center>
-    <a class='link' href="{% url 'pfilter' %}">Back</a>
 
-    {% if messages %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert" '>
-        {% for message in messages %}
-        {% if message.tags == ' error' %} <p style="background-color:red;color:white;">
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-        <h5>{{ message }}</h5>
-        </p>
-        {% else %}
-        <p style="background-color:green;color:white;">
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-        <h5>{{ message }}</h5>
-        </p>
+
+    <a class="btn btn-warning btn-sm m-2" href="{% url 'edit_person' person.id %}"> <i class="fas fa-edit ml-1"></i>
+        Update</a>
+    <div class='container'>
+        {% if person.photo %}
+        <img src='{{person.photo.url}}' width='150' height='150' style="border-radius: 30%;">
+
         {% endif %}
-        {% endfor %}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
-    {% endif %}
 
 
-    <form method='post' action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-
-        <button type="submit" class="btn btn-primary btn-sm m-4">Submit</button>
-    </form>
-
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

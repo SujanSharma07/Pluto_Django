@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Person
 from .forms import PersonForm
@@ -52,6 +52,32 @@ def create_person(request):
 
     #context = {'form': form, 'messages': messages}
     return render(request, 'create.html', locals())
+
+
+def edit_person(request, id):
+    object_ = Person.objects.filter(id=id).first()
+    form = PersonForm(instance=object_)
+    if request.method == 'POST':
+        form = PersonForm(request.POST, request.FILES,
+                          instance=object_)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Object Updated Successfully")
+            return redirect('pfilter')
+        else:
+            messages.error(request, "Please Provide valid data")
+
+    return render(request, 'create.html', locals())
+
+
+def profile(request, id):
+    person = Person.objects.filter(id=id).first()
+    return render(request, 'profile.html', locals())
+
+
+def delete(request, id):
+    Person.objects.filter(id=id).first().delete()
+    return redirect('pfilter')
 
 
 # def create_person(request):
