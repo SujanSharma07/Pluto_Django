@@ -7,9 +7,6 @@ from django.contrib import messages
 import os
 # Create your views here.
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'static/heart.pickle')
-
 
 def home(request, status):
     if status == "True":

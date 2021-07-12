@@ -61,6 +61,8 @@
                 <th scope="col">Is Verified</th>
                 <th scope="col">Documents</th>
                 <th scope="col">Image</th>
+                <th scope="col">Citizenship</th>
+                <th scope="col">Languages</th>
                 <th>Action</th>
 
 
@@ -90,6 +92,24 @@
                     {% else %}
                     No Image Found
                     {% endif %}
+                </td>
+                <td>
+                    <ul>
+                        <li>Citizenship no: {{person.citizen}}</li>
+                        <li>Fathers Name: {{person.citizen.father_name}}</li>
+                        <li>Mothers Name: {{person.citizen.mothername}}</li>
+                        <li>Address: {{person.citizen.address}}</li>
+
+
+
+                    </ul>
+
+                </td>
+                <td>
+                    {% for i in person.language.all %}
+                    {{i.name}}
+
+                    {% endfor %}
                 </td>
                 <td> <a class="btn btn-warning btn-sm m-2" href="{% url 'edit_person' person.id %}"> <i
                             class="fas fa-edit ml-1"></i> Update</a>
