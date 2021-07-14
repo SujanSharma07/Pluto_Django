@@ -31,7 +31,8 @@
     </center>
 
 
-    <a class="btn btn-warning btn-sm m-2" href="{% url 'edit_person' person.id %}"> <i class="fas fa-edit ml-1"></i>
+    <a class="btn btn-warning btn-sm m-2" href="{% url 'accounts:edit_person' person.id %}"> <i
+            class="fas fa-edit ml-1"></i>
         Update</a>
     <div class='container'>
         {% if person.photo %}

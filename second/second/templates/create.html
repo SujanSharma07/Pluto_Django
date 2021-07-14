@@ -20,6 +20,15 @@
             left: 45%;
             width: 50%;
         }
+
+        .form_sal {
+
+            width: 100%;
+            height: 2rem;
+            color: green;
+            background-color: lightgreen;
+
+        }
     </style>
 </head>
 
@@ -27,7 +36,7 @@
     <center class='text-success'>
         <h1> Create Persons</h1>
     </center>
-    <a class='link' href="{% url 'pfilter' %}">Back</a>
+    <a class='link' href="{% url 'accounts:pfilter' %}">Back</a>
 
     {% if messages %}
     <div class="alert alert-success alert-dismissible fade show" role="alert" '>

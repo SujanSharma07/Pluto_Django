@@ -29,6 +29,7 @@ def person_filter(request):
             persons = Person.objects.all()
 
     except:
+        src
         data = "All"
         persons = Person.objects.all()
 
@@ -74,7 +75,7 @@ def profile(request, id):
 
 def delete(request, id):
     Person.objects.filter(id=id).first().delete()
-    return redirect('pfilter')
+    return redirect('accounts:pfilter')
 
 
 # def create_person(request):

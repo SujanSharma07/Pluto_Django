@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+app_name = 'accounts'
 urlpatterns = [
     path('filter/<str:status>/', home, name='home'),
     path('', person_filter, name='pfilter'),
