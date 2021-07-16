@@ -7,9 +7,9 @@ today = date.today()
 class PersonForm(forms.ModelForm):
     #year = forms.CharField()
     documents = forms.ImageField(
-        widget=forms.FileInput(attrs={'class': 'form-control'}))
+        widget=forms.FileInput(attrs={'class': 'form-control'}), required=False)
     photo = forms.ImageField(widget=forms.FileInput(
-        attrs={'class': 'form-control'}))
+        attrs={'class': 'form-control'}), required=False)
     first_name = forms.CharField(widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Enter your first name'}))
     last_name = forms.CharField(widget=forms.TextInput(
@@ -42,7 +42,6 @@ class PersonForm(forms.ModelForm):
             'gender': forms.Select(attrs={'class': 'custom-select'}),
             'citizen': forms.Select(attrs={'class': 'custom-select'}),
             'rooms': forms.Select(attrs={'class': 'custom-select'}),
-            'language': forms.Select(attrs={'class': 'custom-select'}),
             'year': forms.Select(attrs={'class': 'custom-select'}),
 
 
@@ -50,3 +49,8 @@ class PersonForm(forms.ModelForm):
         labels = {
             'gender': 'लिंग',
         }
+
+        # errors = {
+        #     'email':{'required':,'invalid':"Hello all invalid data"}
+
+        # }

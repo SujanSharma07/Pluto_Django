@@ -29,7 +29,6 @@ def person_filter(request):
             persons = Person.objects.all()
 
     except:
-        src
         data = "All"
         persons = Person.objects.all()
 
@@ -69,7 +68,7 @@ def edit_person(request, id):
 
 
 def profile(request, id):
-    person = Person.objects.filter(id=id).first()
+    object = Person.objects.filter(id=id)[0]
     return render(request, 'profile.html', locals())
 
 

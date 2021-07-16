@@ -1,4 +1,5 @@
 <!doctype html>
+{% load crispy_forms_tags %}
 <html lang="en">
 
 <head>
@@ -14,9 +15,11 @@
     <style>
         form {
             padding: 10px;
-            margin: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+
             border: 1px solid black;
-            background-color: bisque;
+            background-color: gray;
             left: 45%;
             width: 50%;
         }
@@ -29,6 +32,17 @@
             background-color: lightgreen;
 
         }
+
+        .errorlist {
+            color: darkred;
+        }
+
+        .container {
+            position: absolute;
+            top: 2rem;
+            left: 25%;
+            margin-top: 2rem;
+        }
     </style>
 </head>
 
@@ -37,36 +51,76 @@
         <h1> Create Persons</h1>
     </center>
     <a class='link' href="{% url 'accounts:pfilter' %}">Back</a>
+    <div class='container'>
 
-    {% if messages %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert" '>
+        {% if messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert" '>
         {% for message in messages %}
         {% if message.tags == ' error' %} <p style="background-color:red;color:white;">
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-        <h5>{{ message }}</h5>
-        </p>
-        {% else %}
-        <p style="background-color:green;color:white;">
             {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-        <h5>{{ message }}</h5>
-        </p>
+            <h5>{{ message }}</h5>
+            </p>
+            {% else %}
+            <p style="background-color:green;color:white;">
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+            <h5>{{ message }}</h5>
+            </p>
+            {% endif %}
+            {% endfor %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         {% endif %}
-        {% endfor %}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+
+
+        <form method='post' action="" enctype="multipart/form-data">
+
+            {% if form.errors %}
+            <div class="alert alert-error">
+                <h4>Please fix the following errors</h4>
+                <ul>
+                    {% for field in form %}
+                    {% if field.errors %}
+                    {% for error in field.errors %}
+                    <p><strong>{{ field.name }}</strong> {{ error|escape }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% if form.non_field_errors %}
+                {{ form.non_field_errors }}
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% csrf_token %}
+            {{form.year}}
+            <img src="https://source.unsplash.com/user/erondu/1600x900" width="100" height="25">
+
+            {{form.documents}}
+            <div class='row'>
+                <div class="col-sm-5">
+                    {{form.first_name|as_crispy_field}}
+                </div>
+                <div class="col-sm-5">
+                    {{form.last_name|as_crispy_field}}
+
+                </div>
+                <div class="col-sm-2">
+                    {{form.age|as_crispy_field}}
+                </div>
+            </div>
+            <label for='id_photo'>Photo:</label>
+            {{form.photo}}
+
+
+            {{form.email|as_crispy_field}}
+
+            <button type="submit" class="btn btn-primary btn-sm m-4">Submit</button>
+        </form>
+
     </div>
-    {% endif %}
-
-
-    <form method='post' action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-
-        <button type="submit" class="btn btn-primary btn-sm m-4">Submit</button>
-    </form>
-
-
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

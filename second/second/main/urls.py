@@ -4,6 +4,7 @@ app_name = 'main'
 
 urlpatterns = [
     path('', home, name='home'),
+    path('create/', create, name='create'),
 
 ]
 

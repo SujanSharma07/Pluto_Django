@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Person</title>
+    <title>object</title>
 
     <style>
         .container {
@@ -25,20 +25,31 @@
 
 <body>
     <center class='text-success'>
-        <h1> {{person.first_name}}
-            {{person.last_name}}
+        <h1> {{object.first_name}}
+            {{object.last_name}}
         </h1>
     </center>
 
 
-    <a class="btn btn-warning btn-sm m-2" href="{% url 'accounts:edit_person' person.id %}"> <i
+    <a class="btn btn-warning btn-sm m-2" href="{% url 'accounts:edit_person' object.id %}"> <i
             class="fas fa-edit ml-1"></i>
         Update</a>
     <div class='container'>
-        {% if person.photo %}
-        <img src='{{person.photo.url}}' width='150' height='150' style="border-radius: 30%;">
+        {% if object.photo %}
+        <img src='{{object.photo.url}}' width='150' height='150' style="border-radius: 30%;">
 
         {% endif %}
+
+
+        <ul>
+            <li>Citizenship no: {{object.citizen}}</li>
+            <li>Fathers Name: {{object.citizen.father_name}}</li>
+            <li>Mothers Name: {{object.citizen.mothername}}</li>
+            <li>Address: {{object.citizen.address}}</li>
+
+
+
+        </ul>
     </div>
 
 
