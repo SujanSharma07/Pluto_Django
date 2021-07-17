@@ -4,7 +4,7 @@ app_name = 'main'
 
 urlpatterns = [
     path('', home, name='home'),
-    path('create/', create, name='create'),
+    path('create/<str:cat>/', create, name='create'),
 
 ]
 

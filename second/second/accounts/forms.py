@@ -36,7 +36,7 @@ class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = "__all__"
-        #exclude = ['age','is_verify']
+        exclude = ['citizen']
         #fields = ['year', 'first_name', 'last_name']
         widgets = {
             'gender': forms.Select(attrs={'class': 'custom-select'}),

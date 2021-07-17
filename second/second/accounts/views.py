@@ -1,11 +1,40 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Person
+from .models import *
 from .forms import PersonForm
 from pathlib import Path
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import user_passes_test
 import os
 # Create your views here.
+
+
+def signout(request):
+    request.session.flush()
+    logout(request)
+    return redirect('accounts:signin')
+
+
+def signin(request):
+    if request.method == 'POST':
+        data = request.POST
+        username = data['username']
+        password = data['pass']
+        # User.objects.filter(username=username,password=password)
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+            messages.success(request, f"Welcome, {username}")
+            if user.is_student:
+                return redirect("accounts:pfilter")
+            else:
+                return redirect("accounts:signin")
+        else:
+            messages.error(request, 'Please Provide Valid Username / Password')
+    if request.user.is_authenticated:
+        return redirect('accounts:pfilter')
+    return render(request, 'login.html')
 
 
 def home(request, status):
@@ -20,7 +49,10 @@ def home(request, status):
     return render(request, 'persons.html', context)
 
 
+# @user_passes_test(lambda u: u.is_verified)
+@user_passes_test(lambda u: u.is_teacher)
 def person_filter(request):
+    print('USer is ', request.user.email)
     try:
         data = request.GET['filter']
         # persons = Person.objects.filter(gender=data).order_by('-id')
@@ -41,6 +73,8 @@ def create_person(request):
     if request.method == 'POST':
         form = PersonForm(request.POST, request.FILES)
         if form.is_valid():
+            form = form.save(commit=False)
+            form.citizen = Citizenship.objects.all().first()
             form.save()
             messages.success(request, "Object Saved Successfully")
             form = PersonForm()

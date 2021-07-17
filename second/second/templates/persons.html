@@ -13,6 +13,9 @@
 </head>
 
 <body>
+
+    {{request.user.first_name|capfirst}} {{request.user.last_name|capfirst}}
+    <a href="{% url 'accounts:logout' %}">Logout</a>
     <center class='text-success'>
         <h1> List of Persons ({{filter}})</h1>
     </center>
@@ -75,6 +78,7 @@
 
 
             {% for person in persons %}
+            {% if request.user.is_verified %}
             <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 <td><a href="{% url 'accounts:profile' person.id %}"> {{person.first_name}}
@@ -122,6 +126,7 @@
                 </td>
 
             </tr>
+            {% endif %}
             {% endfor %}
         </tbody>
     </table>
