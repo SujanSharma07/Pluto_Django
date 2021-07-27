@@ -1,5 +1,6 @@
 from django import forms
-from .models import Person
+from django.db import models
+from .models import Person, Language
 from datetime import datetime, date
 today = date.today()
 
@@ -54,3 +55,16 @@ class PersonForm(forms.ModelForm):
         #     'email':{'required':,'invalid':"Hello all invalid data"}
 
         # }
+
+
+class CitizenForm(forms.ModelForm):
+    class Meta:
+        fields = '__all__'
+        exclude = ['user']
+
+
+class LanguageForm(forms.ModelForm):
+    class Meta:
+        model = Language
+        fields = '__all__'
+        exclude = ['user']

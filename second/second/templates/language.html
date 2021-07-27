@@ -19,7 +19,7 @@
             margin-bottom: 10px;
 
             border: 1px solid black;
-            background-color: lightgray;
+            background-color: gray;
             left: 45%;
             width: 50%;
         }
@@ -48,8 +48,9 @@
 
 <body>
     <center class='text-success'>
-        <h1> Login</h1>
+        <h1> Create Persons</h1>
     </center>
+    <a class='link' href="{% url 'accounts:pfilter' %}">Back</a>
     <div class='container'>
 
         {% if messages %}
@@ -72,27 +73,33 @@
         </div>
         {% endif %}
 
-        <!-- THis  if else is for authenticated user and unauthenticated user -->
-        {% if request.user.is_authenticated %}
-        Welcome {{request.user.username}}
 
-        {% else %}
-        <form method='post' action="{% url 'accounts:signin' %}" enctype="multipart/form-data">
+        <form method='post' action="" enctype="multipart/form-data">
+
+            {% if form.errors %}
+            <div class="alert alert-error">
+                <h4>Please fix the following errors</h4>
+                <ul>
+                    {% for field in form %}
+                    {% if field.errors %}
+                    {% for error in field.errors %}
+                    <p><strong>{{ field.name }}</strong> {{ error|escape }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% if form.non_field_errors %}
+                {{ form.non_field_errors }}
+                {% endif %}
+            </div>
+            {% endif %}
+
             {% csrf_token %}
-            <label for='username'>Username / Email</label>
-            <input name='username' id='username' type='text'>
-            <br>
-            <label for='pass'>Password</label>
-            <input name='pass' id='pass' type='password'>
+            {{form}}
 
-            <br>
             <button type="submit" class="btn btn-primary btn-sm m-4">Submit</button>
         </form>
 
-        <a href="{% url 'main:create' 'teacher' %}">Signup as Teacher</a>
-        <a href="{% url 'main:create' 'student' %}">Signup as Student</a>
-
-        {% endif %}
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
 

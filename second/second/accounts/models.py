@@ -1,5 +1,5 @@
 from django.db import models
-
+from main.models import User
 # default --> null = False, blank = False
 
 YEAR_IN_SCHOOL_CHOICES = (
@@ -13,6 +13,7 @@ GENDERS = [('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')]
 
 
 class Citizenship(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=50)
     DOB = models.DateField(null=True, blank=True)
     father_name = models.CharField(max_length=50)

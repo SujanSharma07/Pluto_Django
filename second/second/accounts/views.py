@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
-from .forms import PersonForm
-from pathlib import Path
+from .forms import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
-import os
 # Create your views here.
 
 
@@ -110,6 +108,80 @@ def delete(request, id):
     Person.objects.filter(id=id).first().delete()
     return redirect('accounts:pfilter')
 
+# Class Based Views
+
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView 
+class LanguageCreate(CreateView): 
+    # specify the model for list view
+    model = Language
+    template_name = "language.html"
+    form_class = LanguageForm
+    success_url ='  /'
+    #reverse_lazy = ()
+
+    '''
+    def get(self,request): # if request.method == "GET":
+    def post(self,request): # if request.method == "POST":
+        Language.objects.create(request.POST)
+    '''    
+
+
+class LanguageList(ListView): 
+    model = Language
+    #template_name = "language.html"
+    def get_context_data(self,**kwargs):
+        kwargs['name'] = 'My name is sudip !!!'
+        kwargs['room'] = Room.objects.all()
+
+        context = super(LanguageList, self).get_context_data(**kwargs)
+        return context  
+
+
+class LanguageDetail(DetailView): 
+    # specify the model for list view
+    model = Language
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# request.POST['HTML_NAME']
+# request.POST.get('HTML_NAME')
+
+
+# request.GET['HTML_NAME']
+# request.GET.get('HTML_NAME',None)
+
+# Signup
+# signin
+# if Citizenship.objects.filter(user=request.user).count == 1:
+#     dashboard
+# else:
+#     citizenship form
+
+
+# form = CitizenForm(request.POST)
+# if form.is_valid():
+#     form = form.save(commit=False)
+#     form.user = request.user
+#     form.save()
 
 # def create_person(request):
 #     if request.method == 'POST':
@@ -128,6 +200,7 @@ def delete(request, id):
 #     else:
 #         print('GET REQUEST render page only')
 #     return render(request, 'create.html')
+# Multiple ways to create a Object
 """ 
 Person.objects.create(year="Junior",
                       first_name='rohit',

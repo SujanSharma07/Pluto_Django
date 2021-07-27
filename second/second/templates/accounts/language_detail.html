@@ -19,7 +19,7 @@
             margin-bottom: 10px;
 
             border: 1px solid black;
-            background-color: lightgray;
+            background-color: gray;
             left: 45%;
             width: 50%;
         }
@@ -48,8 +48,9 @@
 
 <body>
     <center class='text-success'>
-        <h1> Login</h1>
+        <h1> Create Persons </h1>
     </center>
+    <a class='link' href="{% url 'accounts:pfilter' %}">Back</a>
     <div class='container'>
 
         {% if messages %}
@@ -72,27 +73,8 @@
         </div>
         {% endif %}
 
-        <!-- THis  if else is for authenticated user and unauthenticated user -->
-        {% if request.user.is_authenticated %}
-        Welcome {{request.user.username}}
+        <p>{{object.name}}</p>
 
-        {% else %}
-        <form method='post' action="{% url 'accounts:signin' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <label for='username'>Username / Email</label>
-            <input name='username' id='username' type='text'>
-            <br>
-            <label for='pass'>Password</label>
-            <input name='pass' id='pass' type='password'>
-
-            <br>
-            <button type="submit" class="btn btn-primary btn-sm m-4">Submit</button>
-        </form>
-
-        <a href="{% url 'main:create' 'teacher' %}">Signup as Teacher</a>
-        <a href="{% url 'main:create' 'student' %}">Signup as Student</a>
-
-        {% endif %}
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
